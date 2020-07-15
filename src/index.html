@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>Tetrahedron</title>
+		<style>
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <script src='https://cdn.jsdelivr.net/npm/dat.gui@0.7.7/build/dat.gui.min.js'></script>
+		<script src="https://cdn.jsdelivr.net/npm/ml-matrix@6.5.0/matrix.umd.min.js"></script>
+        <script src="js/three_stuff.js"></script>
+        <script src="js/gui.js"></script>
+        
+		<script src="solution.js"></script>
+		<script>
+                
+            //tetrahedron base points
+            const _Q = new Point(2, 3, 3);
+            const _P = new Point(8, 1, 2);
+            const _R = new Point(6, 1, 9);
+            const E = new Point(5, 5, 4);
+    
+            const _Lq = distance(E, _Q);
+            const _Lp = distance(E, _P);
+            const _Lr = distance(E, _R);
+
+            var scene = new THREE.Scene();
+
+            initializeGui(scene);
+
+            function prepareScene(scene, camera) {
+                
+                const solution = find4thVertex(_Q, _P, _R, _Lq, _Lp, _Lr);
+
+                // rendering
+
+                addVector(scene, _P, solution, 0xFFFF00);
+                
+                controlBaseTriangle(scene, true);
+                
+                controlPointLabels(scene, true);
+                controlSpheres(scene, true);
+
+                camera.position.set(14, 6, -2);
+            }
+
+            threeJsMain(scene, prepareScene);
+
+		</script>
+	</body>
+</html>
